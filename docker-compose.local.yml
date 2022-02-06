@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  postgresql:
+    container_name: todoshare-postgresql
+    build:
+      context: ./docker/postgresql
+      dockerfile: Dockerfile
+    image: todoshare/postgresql
+    env_file:
+      - docker/postgresql/.env
+    ports:
+      - "5432:5432"
+    networks:
+      - container-link
+    volumes:
+      - todoshare-postgresql-data:/var/lib/postgresql/data:rw
+    environment:
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --locale=C'
+    logging:
+      driver: json-file
+      options:
+        max-size: '5m'
+        max-file: '1'
+
+  pgadmin4:
+    container_name: todoshare-pgadmin4
+    image: dpage/pgadmin4:6.4
+    env_file:
+      - docker/pgadmin4/.env
+    depends_on:
+      - postgresql
+    ports:
+      - "5433:80"
+    networks:
+      - container-link
+    volumes:
+      - todoshare-pgadmin4-data:/var/lib/pgadmin:rw
+    logging:
+      driver: json-file
+      options:
+        max-size: '5m'
+        max-file: '1'
+
+  app:
+    container_name: todoshare-backend-app
+    build:
+      context: ./
+      dockerfile: docker/app/Dockerfile
+    image: todoshare-backend/golang
+    depends_on:
+      - postgresql
+    networks:
+      - container-link
+    volumes:
+      - ./:/go/src/app:rw
+    tty: true
+    logging:
+      driver: json-file
+      options:
+        max-size: '5m'
+        max-file: '1'
+
+networks:
+  default:
+    external:
+      name: bridge
+  container-link:
+    name: todoshare.docker.internal
+
+volumes:
+  todoshare-postgresql-data:
+    driver: local
+  todoshare-pgadmin4-data:
+    driver: local

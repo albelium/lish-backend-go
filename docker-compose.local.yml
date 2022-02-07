@@ -6,7 +6,7 @@ services:
     build:
       context: ./docker/postgresql
       dockerfile: Dockerfile
-    image: todoshare/postgresql
+    image: todoshare/db
     env_file:
       - docker/postgresql/.env
     ports:

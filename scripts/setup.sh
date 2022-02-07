@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd "$(dirname "$0")" || exit
+FILE_PATH=$(cd "$(dirname "$0")" || exit; pwd)
 
-cd ../
+cd "$FILE_PATH/../" || exit
 docker-compose -p todoshare -f docker-compose.local.yml up -d --build

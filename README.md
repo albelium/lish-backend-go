@@ -42,7 +42,7 @@ docker exec -it devenv_app /bin/sh
 コンテナに入ったら、コードを実行する。
 
 ```bash
-go run src/main.go
+go run cmd/main.go
 ```
 
 ## 不要になったら...

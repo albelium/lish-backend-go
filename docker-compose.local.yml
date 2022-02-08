@@ -47,7 +47,7 @@ services:
     build:
       context: ./
       dockerfile: docker/app/Dockerfile
-    image: todoshare-backend/golang
+    image: todoshare/backend-app
     depends_on:
       - postgresql
     networks:

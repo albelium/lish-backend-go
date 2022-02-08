@@ -50,6 +50,8 @@ services:
     image: todoshare/backend-app
     depends_on:
       - postgresql
+    ports:
+      - "5434:8080"
     networks:
       - container-link
     volumes:

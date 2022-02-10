@@ -1,3 +1,3 @@
-module github.com/albelium/todoshare-backend
+module github.com/albelium/lish-backend
 
 go 1.17

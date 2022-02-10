@@ -1,4 +1,4 @@
-# todo-share-backend
+# lish-backend
 
 ## 開発環境構築
 
